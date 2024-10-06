@@ -4,8 +4,10 @@ import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { BookModule } from './book/book.module';
 import { SequelizeModule } from '@nestjs/sequelize';
-import { User } from './users/user.model'
-import { UsersModule } from './users/user.module';
+import { User } from './login/dto/user.model'
+import { UsersModule } from './login/users/user.module';
+import { AuthModule } from './auth/auth.module';
+import { LoginModule } from './login/login.module';
 
 @Module({
   imports: [ConfigModule.forRoot({
@@ -19,7 +21,7 @@ import { UsersModule } from './users/user.module';
     database: 'test',
     autoLoadModels: true,
     models: [User],
-  }), UsersModule],
+  }), UsersModule, AuthModule, LoginModule],
   controllers: [AppController],
   providers: [AppService],
 })
