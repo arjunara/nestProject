@@ -13,3 +13,10 @@ export interface SignInDto {
     userName: string;
     password: string;
 }
+
+export interface SingInResponse {
+    accessToken: string;
+    userId: string;
+    userName: string;
+    phoneNumber: string;
+}

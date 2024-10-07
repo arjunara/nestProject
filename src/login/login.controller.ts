@@ -1,12 +1,19 @@
-import { Controller, Post, Body } from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user.dto';
+import { Controller, Post, Body, HttpException } from '@nestjs/common';
+import { CreateUserDto, SignInDto, SingInResponse} from './dto/create-user.dto';
 import { LoginService } from './login.service';
 
-@Controller('login')
+@Controller('auth')
 export class LoginController {
     constructor(private logInService: LoginService) {}
     @Post('register')
-    registerNewUser(@Body() userPayload: CreateUserDto) {
+    registerNewUser(@Body() userPayload: CreateUserDto): Promise<Partial<SingInResponse>> {
         return this.logInService.registerNewUser(userPayload)
+    }
+
+    @Post('login')
+    singIn(@Body() inputUserData: SignInDto): Promise<SingInResponse | HttpException> {
+        // TODO: Validate inputUserData using validate Pipe
+        const {userName: inputUserName, password } = inputUserData
+        return this.logInService.signIn(inputUserName, password)
     }
 }

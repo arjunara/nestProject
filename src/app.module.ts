@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { BookModule } from './book/book.module';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { User } from './login/dto/user.model'
@@ -23,6 +23,7 @@ import { LoginModule } from './login/login.module';
     models: [User],
   }), UsersModule, AuthModule, LoginModule],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, ConfigService],
+  exports: [ConfigService]
 })
 export class AppModule {}
