@@ -1,9 +1,28 @@
 import { Module } from '@nestjs/common';
-import { AuthController } from './auth.controller';
-import { AuthService } from './auth.service';
+import { LoginController } from './auth.controller';
+import { LoginService } from './auth.service';
+import { SequelizeModule } from '@nestjs/sequelize';
+import { User } from './dto/user.model'
+import { JwtModule } from '@nestjs/jwt';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+
+const initJwtModule = () => {
+  return JwtModule.registerAsync({
+    imports: [ConfigModule],
+    useFactory: async (configService: ConfigService) => ({
+      global: true,   //Optional
+      secret: configService.get<string>('jwtSecret'),
+      signOptions: { expiresIn: '60s' },
+    }),
+    inject: [ConfigService]
+  })
+}
 
 @Module({
-  controllers: [AuthController],
-  providers: [AuthService]
+  imports: [SequelizeModule.forFeature([User]), initJwtModule()],
+  controllers: [LoginController],
+  providers: [LoginService, ConfigService]
 })
+// https://stackoverflow.com/questions/76466982/getting-secretorprivatekey-must-have-a-value-error-in-nestjs-jwt-authenticatio
+
 export class AuthModule {}
