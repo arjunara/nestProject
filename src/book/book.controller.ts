@@ -4,6 +4,7 @@ import { CreateBookDto } from './dto/create-book.dto';
 import { UpdateBookDto } from './dto/update-book.dto';
 import { ConfigModule } from '@nestjs/config';
 import { Book } from './book.model'
+import { skipAuth } from 'src/decorator/skipAuth';
 
 @Controller('book')
 export class BookController {
@@ -15,9 +16,11 @@ export class BookController {
     return this.bookService.create(createBookDto);
   }
 
+  // @skipAuth()
   @Get()
   findAll(): Promise<Book[]> {
     // console.log(`:::::::::`,  this.configService('DATABASE_USER'))
+    console.log(`:::::ddd::::`,  )
     return this.bookService.findAll();
   }
 
