@@ -3,7 +3,7 @@ import { LoginController } from './login.controller';
 import { LoginService } from './login.service';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { User } from './dto/user.model'
-import { JwtModule, JwtService } from '@nestjs/jwt';
+import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 
 const initJwtModule = () => {
@@ -21,7 +21,8 @@ const initJwtModule = () => {
 @Module({
   imports: [SequelizeModule.forFeature([User]), initJwtModule()],
   controllers: [LoginController],
-  providers: [LoginService, JwtService, ConfigService]
+  providers: [LoginService, ConfigService]
 })
+// https://stackoverflow.com/questions/76466982/getting-secretorprivatekey-must-have-a-value-error-in-nestjs-jwt-authenticatio
 
 export class LoginModule {}

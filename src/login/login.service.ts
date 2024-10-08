@@ -5,7 +5,6 @@ import { InjectModel } from "@nestjs/sequelize";
 import { Op } from 'sequelize';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
-import { ConfigService } from '@nestjs/config';
 
 
 @Injectable()
@@ -13,8 +12,7 @@ export class LoginService {
     constructor(
         @InjectModel(User)
         private userModel: typeof User,
-        private jwtService: JwtService,
-        private configService: ConfigService
+        private jwtService: JwtService
     ) {}
     async registerNewUser(newUser: CreateUserDto): Promise<any> {
         // TODO: Validate incoming data
@@ -43,13 +41,7 @@ export class LoginService {
     }
 
     async generateToken(payload: any): Promise<string> {
-        // const payload = {
-        //     userId: userDetails.id,
-        //     userName: userDetails.userName,
-        //     phoneNumber: userDetails.phoneNumber
-        // }
-        console.log(`:::::::::`,  payload)
-        return await this.jwtService.signAsync(payload, {secret: this.configService.get<string>('jwtSecret')})
+        return await this.jwtService.signAsync(payload)
     }
 
     async signIn(inputUserName: string, password: string): Promise<SingInResponse | HttpException> {
