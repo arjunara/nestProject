@@ -22,14 +22,21 @@ a,
 }
 
 @media (min-width: 1024px) {
+  * {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+  }
   body {
     display: flex;
     place-items: center;
   }
 
   #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: block;
+    min-height: 100vh;
+    background-color: aquamarine;
     padding: 0 2rem;
+    width: 100%;
   }
 }
